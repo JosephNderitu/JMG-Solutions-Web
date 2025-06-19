@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Portfolio | Electrical Excellence</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Lightbox CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --bs-primary: #0d6efd;
+            --bs-warning: #ffc107;
+            --bs-dark: #212529;
+            --bs-light: #f8f9fa;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-x: hidden;
+        }
+        
+        .bg-grid {
+            background-image: 
+                linear-gradient(rgba(0, 0, 0, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 0, 0, 0.1) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+        
+        .section-divider {
+            width: 80px;
+            height: 4px;
+            opacity: 1;
+        }
+        
+        .project-card {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+        
+        .project-card img {
+            transition: transform 0.5s ease;
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175) !important;
+        }
+        
+        .project-card:hover img {
+            transform: scale(1.05);
+        }
+        
+        .project-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .project-card:hover .project-overlay {
+            opacity: 1;
+        }
+        
+        .bg-gradient-dark {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.9) 0%, rgba(33, 37, 41, 0.95) 100%);
+        }
+        
+        .before-after-container {
+            position: relative;
+            width: 100%;
+            height: 280px;
+            overflow: hidden;
+        }
+        
+        .before-image, .after-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: opacity 0.5s ease;
+        }
+        
+        .before-image {
+            opacity: 0;
+        }
+        
+        .before-after-toggle {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 4px;
+            height: 100%;
+            background-color: white;
+            cursor: ew-resize;
+            z-index: 10;
+        }
+        
+        .before-after-toggle::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40px;
+            height: 40px;
+            background-color: var(--bs-warning);
+            border-radius: 50%;
+            border: 3px solid white;
+        }
+        
+        .video-thumbnail {
+            position: relative;
+            width: 100%;
+            height: 280px;
+            overflow: hidden;
+        }
+        
+        .video-play-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            background-color: rgba(255, 193, 7, 0.8);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .video-play-button:hover {
+            background-color: var(--bs-warning);
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+        
+        .project-stats {
+            font-size: 0.85rem;
+        }
+        
+        .max-w-700 {
+            max-width: 700px;
+        }
+        
+        .hover-shadow-lg:hover {
+            box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175) !important;
+        }
+        
+        @media (max-width: 768px) {
+            .project-card img,
+            .video-thumbnail,
+            .before-after-container {
+                height: 220px;
+            }
+            
+            .project-overlay {
+                padding: 15px;
+            }
+        }
+        
+        /* Custom animation for badges */
+        .badge-pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(255, 193, 7, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(255, 193, 7, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(255, 193, 7, 0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Portfolio Gallery -->
+    <section class="py-6 py-lg-7 bg-light position-relative" id="gallery">
+        <!-- Decorative elements -->
+        <div class="position-absolute top-0 start-0 w-100 h-100 opacity-10">
+            <div class="bg-grid position-absolute top-0 start-0 w-100 h-100"></div>
+        </div>
+        
+        <div class="container position-relative">
+            <div class="text-center mb-6">
+                <span class="badge bg-warning text-dark rounded-pill mb-3 badge-pulse">Our Work</span>
+                <h2 class="display-5 fw-bold mb-3">Electrical Excellence in Action</h2>
+                <div class="section-divider mx-auto mb-4 bg-warning"></div>
+                <p class="lead text-muted max-w-700 mx-auto">Explore our completed projects showcasing precision electrical work, innovative solutions, and satisfied clients across commercial and residential sectors.</p>
+            </div>
+            
+            <div class="row g-4 gallery-grid">
+                <!-- Project 1 - Added client testimonial and stats -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="project-card hover-shadow-lg">
+                        <img src="Images/bulb-switch.jpg" class="img-fluid" alt="Electrical Panel Installation">
+                        <div class="project-overlay bg-gradient-dark">
+                            <div class="overlay-content">
+                                <div class="badge bg-warning text-dark mb-2">Commercial</div>
+                                <h5 class="fw-bold text-white mb-2">Corporate Office Upgrade</h5>
+                                <p class="text-light mb-3">Complete electrical infrastructure modernization for 30-story building</p>
+                                <ul class="project-stats list-inline text-white mb-3">
+                                    <li class="list-inline-item me-3"><i class="fas fa-bolt me-1"></i> 800A Service</li>
+                                    <li class="list-inline-item"><i class="fas fa-clock me-1"></i> 8 Weeks</li>
+                                </ul>
+                                <div class="d-flex justify-content-center">
+                                    <a href="project-details.html" class="btn btn-warning btn-sm rounded-pill me-2">
+                                        <i class="fas fa-info-circle me-1"></i>Details
+                                    </a>
+                                    <a href="Images/bulb-switch.jpg" data-lightbox="gallery" class="btn btn-light btn-sm rounded-pill">
+                                        <i class="fas fa-expand me-1"></i>Enlarge
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 2 - Added before/after toggle -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="project-card hover-shadow-lg">
+                        <div class="before-after-container">
+                            <img src="Images/team-lead.jpg" class="img-fluid after-image" alt="Smart Hotel Room">
+                            <div class="before-after-toggle"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 3 - Added progress infographic -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="project-card hover-shadow-lg">
+                        <img src="Images/motor.jpg" class="img-fluid" alt="Industrial Electrical Systems">
+                    </div>
+                </div>
+                
+                <!-- Project 4 - Added video preview -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="project-card hover-shadow-lg">
+                        <div class="video-thumbnail position-relative">
+                            <img src="Images/shower_installation.jpg" class="img-fluid" alt="Commercial Lighting Installation">
+                            <div class="video-play-button">
+                                <i class="fas fa-play"></i>
+                            </div>
+                        </div>
+                        <div class="project-overlay bg-gradient-dark">
+                            <div class="overlay-content">
+                                <div class="badge bg-warning text-dark mb-2">Landscape</div>
+                                <h5 class="fw-bold text-white mb-2">Resort Lighting Design</h5>
+                                <p class="text-light mb-3">Custom outdoor LED solutions with smart controls</p>
+                                <div class="d-flex justify-content-center">
+                                    <a href="#" class="btn btn-warning btn-sm rounded-pill me-2" data-bs-toggle="modal" data-bs-target="#videoModal1">
+                                        <i class="fas fa-play me-1"></i>Watch Video
+                                    </a>
+                                    <a href="project-details.html" class="btn btn-light btn-sm rounded-pill">
+                                        <i class="fas fa-info-circle me-1"></i>Details
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 5 - Added certification badge -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="project-card hover-shadow-lg">
+                        <img src="Images/piping.jpg" class="img-fluid" alt="Smart Home Installation">
+                        <div class="project-overlay bg-gradient-dark">
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 6 - Added emergency badge -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="project-card hover-shadow-lg">
+                        <div class="position-relative">
+                            <img src="Images/earthing.jpg" class="img-fluid" alt="Emergency Electrical Repair">
+                            <div class="emergency-badge position-absolute top-0 end-0 m-3">
+                                <span class="badge bg-danger rounded-pill px-3 py-2">
+                                    <i class="fas fa-exclamation-triangle me-1"></i>Emergency
+                                </span>
+                            </div>
+                        </div>
+                        <div class="project-overlay bg-gradient-dark">
+                            <div class="overlay-content">
+                                <h5 class="fw-bold text-white mb-2">24/7 Emergency Response</h5>
+                                <p class="text-light mb-3">Critical system restoration during storm outage</p>
+                                <div class="response-time mb-3 text-center">
+                                    <div class="text-white mb-1">Response Time</div>
+                                    <div class="display-6 text-warning fw-bold">32 mins</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 7 - Added video preview -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="project-card hover-shadow-lg">
+                        <div class="video-thumbnail position-relative">
+                            <img src="Images/main_switch.jpg" class="img-fluid" alt="Construction Site Electrical">
+                            <div class="video-play-button">
+                                <i class="fas fa-play"></i>
+                            </div>
+                        </div>
+                        <div class="project-overlay bg-gradient-dark">
+                            <div class="overlay-content">
+                                <div class="badge bg-warning text-dark mb-2">Construction</div>
+                                <h5 class="fw-bold text-white mb-2">New Development Wiring</h5>
+                                <p class="text-light mb-3">Complete electrical infrastructure for 50-unit complex</p>
+                                <ul class="project-stats list-inline text-white mb-3">
+                                    <li class="list-inline-item me-3"><i class="fas fa-building me-1"></i> 50 Units</li>
+                                    <li class="list-inline-item"><i class="fas fa-bolt me-1"></i> 200A Each</li>
+                                </ul>
+                                <div class="d-flex justify-content-center">
+                                    <a href="#" class="btn btn-warning btn-sm rounded-pill me-2" data-bs-toggle="modal" data-bs-target="#videoModal2">
+                                        <i class="fas fa-play me-1"></i>Watch Video
+                                    </a>
+                                    <a href="project-details.html" class="btn btn-light btn-sm rounded-pill">
+                                        <i class="fas fa-info-circle me-1"></i>Details
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 8 - Added client testimonial -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="project-card hover-shadow-lg">
+                        <img src="Images/standing_cabinet.jpg" class="img-fluid" alt="Resort Electrical Work">
+                        <div class="project-overlay bg-gradient-dark">
+                            <div class="overlay-content">
+                                <div class="badge bg-warning text-dark mb-2">Hospitality</div>
+                                <h5 class="fw-bold text-white mb-2">Luxury Resort Electrical</h5>
+                                <p class="text-light mb-3">Complete electrical systems for 5-star resort</p>
+                                <div class="d-flex justify-content-center">
+                                    <a href="project-details.html" class="btn btn-warning btn-sm rounded-pill me-2">
+                                        <i class="fas fa-info-circle me-1"></i>Details
+                                    </a>
+                                    <a href="Images/standing_cabinet.jpg" data-lightbox="gallery" class="btn btn-light btn-sm rounded-pill">
+                                        <i class="fas fa-expand me-1"></i>Enlarge
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 9 - Added energy savings focus -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="project-card hover-shadow-lg">
+                        <img src="Images/electric_post.jpg" class="img-fluid" alt="Solar Panel Installation">
+                        <div class="project-overlay bg-gradient-dark">
+                            <div class="overlay-content">
+                                <div class="badge bg-warning text-dark mb-2">Renewable Energy</div>
+                                <h5 class="fw-bold text-white mb-2">Network Integration Project</h5>
+                                <p class="text-light mb-3">15kW system with battery backup</p>
+                                
+                                <div class="project-progress mb-3">
+                                    <div class="d-flex justify-content-between text-white small mb-1">
+                                        <span>Energy Independence</span>
+                                        <span>78%</span>
+                                    </div>
+                                    <div class="progress bg-dark" style="height: 6px;">
+                                        <div class="progress-bar bg-success" style="width: 78%"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="project-progress mb-3">
+                                    <div class="d-flex justify-content-between text-white small mb-1">
+                                        <span>ROI Period</span>
+                                        <span>5.2 Years</span>
+                                    </div>
+                                    <div class="progress bg-dark" style="height: 6px;">
+                                        <div class="progress-bar bg-info" style="width: 65%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Modal 1 -->
+    <div class="modal fade" id="videoModal1" tabindex="-1" aria-labelledby="videoModal1Label" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="videoModal1Label">Resort Lighting Design</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="ratio ratio-16x9">
+                        <iframe src="Images/wiring_video.mp4" title="YouTube video" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Video Modal 2 -->
+    <div class="modal fade" id="videoModal2" tabindex="-1" aria-labelledby="videoModal2Label" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="videoModal2Label">New Development Wiring</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="ratio ratio-16x9">
+                        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="YouTube video" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Lightbox JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
+    <script>
+        // Before/After toggle functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggleButtons = document.querySelectorAll('.toggle-before-after');
+            
+            toggleButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const container = this.closest('.project-card').querySelector('.before-after-container');
+                    const beforeImage = container.querySelector('.before-image');
+                    const afterImage = container.querySelector('.after-image');
+                    
+                    if (beforeImage.style.opacity === '0') {
+                        beforeImage.style.opacity = '1';
+                        afterImage.style.opacity = '0';
+                    } else {
+                        beforeImage.style.opacity = '0';
+                        afterImage.style.opacity = '1';
+                    }
+                });
+            });
+            
+            // Initialize before/after images to show after image first
+            document.querySelectorAll('.before-image').forEach(img => {
+                img.style.opacity = '0';
+            });
+        });
+    </script>
+</body>
+</html>
